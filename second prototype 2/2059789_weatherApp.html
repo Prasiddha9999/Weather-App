@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>My weather app</title>
+  </head>
+  <body>
+      <div class="main">
+	<h1 class="h1">Weather in <span class="city"> .....Loading........</span></h1>
+    <br><br>
+    <div class="temps"><span class="temp">Please wait...</span> °C</div><br>
+    <span class="tempmaxs">Max: <span class="temp_max"></span> °C</span>
+    <span class="tempmins">Min: <span class="temp_min"></span> °C</span>
+    <div class="Icon"></div>
+    <div id="responsemain">Please wait...</div>
+    <div id="response">Please wait...</div>
+    
+   
+    <br><br><br>
+    <div class="last">
+    <span class="humiditys"><b>Humidity</b><br><span class="humidity"></span>%</span>
+    <span class="winds"><b>Wind</b><br><span class="wind"></span>mph</span>
+    <span class="Pressures"><b>Pressure</b><br><span class="Pressure"></span>hPa</span>
+</div>
+</div>
+<script>
+    fetch('http://localhost/weather/my-api.php')//connects to the database of client
+    .then(response => response.json())
+    .then(response => {
+        console.log(response);
+        var tem = Math.floor(response[0].weather_temperature - 273.15);
+            var max_tem = Math.floor(response[0].weather_temp_max - 273.15);
+           var min_tem = Math.floor(response[0].weather_temp_min - 273.15);
+        document.querySelector(".temp").innerHTML=tem;
+        document.getElementsByClassName('Icon')[0].innerHTML = '<img class = "img" src='+"http://openweathermap.org/img/w/" + response[0].weather_icon + ".png"+'>';
+        document.getElementById("response").innerHTML = response[0].weather_description.toUpperCase()  ;
+        document.getElementById("responsemain").innerHTML = response[0].weather_main.toUpperCase()  ;
+        document.querySelector(".temp_max").innerHTML=max_tem;
+        document.querySelector(".temp_min").innerHTML=min_tem;
+        document.querySelector(".humidity").innerHTML=response[0].weather_humidity;
+        document.querySelector(".wind").innerHTML=response[0].weather_wind;
+        document.querySelector(".Pressure").innerHTML=response[0].weather_pressure;
+        document.querySelector(".city").innerHTML=response[0].city;
+       
+    })
+.catch(err => {
+    console.log(err);
+});		
+
+
+</script>
+
+
+
+
+
+?>
+<!-- CSS Design -->
+<style>
+    .main{
+        color:hsl(248, 11%, 86%);
+        background-color: rgb(50, 49, 54);
+        margin: auto;
+        width: 28%;
+        border: ridge solid black;
+        padding-top: 1%;
+        padding-left: 1%;
+        padding-right: 1%;
+        padding-bottom: 1%;
+        margin-top:1%;
+        border-radius: 5%;
+        border: groove white;
+    }
+    .h2{
+        text-align: center;
+        font-size:200%;
+    }
+    .h1{
+        text-align: center;
+    }
+    .temp{
+       
+        font-size:100%;
+        text-align: center;
+    }
+    .temps{
+        font-size:400%;
+        text-align: center;
+    }
+    .Icon{
+        text-align: center;
+        
+    }
+    .img{
+        width: 40%;  
+    height: auto;  
+    }
+    
+   #responsemain{
+    font-size:200%;
+    text-align: center;
+   }
+   #response{
+    font-size:100%;
+    text-align: center;
+   }
+   .temp_max{
+    font-size:100%;
+    text-align: right;
+    
+   }
+   .temp_min{
+    font-size:100%;
+    text-align: left;
+    }
+    .tempmaxs{
+        padding-right:45%;
+        font-size:120%;
+    }
+.tempmins{
+    font-size:120%;  
+    padding-left:10%;
+}
+        
+    
+.last{
+display:flex;
+
+}
+.humiditys{
+background-color: rgb(50, 49, 54);
+border: ridge solid black;
+padding:3%;
+border: groove white;
+border-radius: 10%;
+}
+.Pressures{
+background-color: rgb(50, 49, 54);    
+border: ridge solid black;
+border-radius: 10%;
+padding:3%;
+border: groove white;
+}
+.winds{
+background-color: rgb(50, 49, 54);
+padding:3%;      
+border: ridge solid black;
+border-radius: 10%;
+border: groove white;
+}
+.last > span {
+margin: 0.8%;
+font-size: 175%;
+}
+body {
+background-color: rgb(4, 191, 248);
+}
+        
+
+    
+</style>
+	
+  </body>
+</html>
